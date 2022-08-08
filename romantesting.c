@@ -1,3 +1,4 @@
+// Conversion of the Roman Number into the Digit.
 #include <stdio.h>
 #include <string.h>
 
@@ -5,10 +6,11 @@
 
 
 int convert(char); // Declaration of function
-int i = 0, num = 0;
+int i = 0, num = 0;	// Global Declaration of the Variables
 //char romanNumber[100];
-char *romanNumber;
+char *romanNumber;	// Pointer of the RomanNumber Variable
 int fun();
+char Invalid();
 
 int main ()
 {
@@ -20,14 +22,26 @@ int main ()
         while(fgets(line, MAX_LINE_LENGTH, textfile))
              {
        	//printf(line);
-       	romanNumber=line;
-       	fun();
-       	
+       	romanNumber=line;// Reading Input Line by Line.
+       	fun();//Logic of the Conversion
+  
              }
      
         fclose(textfile);
         //displaying converted number
         return 0;
+}
+char Invalid()
+{
+char *invalidfile ="Invalid.txt";
+FILE *ip =fopen(invalidfile,"a+");
+if(ip == NULL)
+	{
+	printf("The File is not opened %s",invalidfile);
+	return -1;
+	}
+fprintf(ip,"%s",romanNumber);
+fclose(ip);	
 }
 
 
@@ -60,6 +74,7 @@ int fun(void)
               if(convert(romanNumber[ i ]) < 0 )
 		 {
 		  printf("\nInvalid Roman Number.\n");
+            	  Invalid();
             	  return 0;
 	         }	
 
@@ -69,6 +84,7 @@ int fun(void)
             if(convert(romanNumber[ i ]) < convert(romanNumber[i + 2]))
                {
                  printf("\nInvalid Roman Number.\n");
+                 
                  return 0;
                }
           }
@@ -84,8 +100,23 @@ int fun(void)
            }
             i++;
             
-          }
+}
+
+
+char *filename ="output.txt";
+FILE *fp =fopen(filename,"a+");
+if(fp == NULL)
+	{
+	printf("The File is not opened %s",filename);
+	return -1;
+	}
+fprintf(fp,"%d\n",num);
+fclose(fp);
+
+
+
 printf("\nEquivalent decimal number: %d\n", num);
+printf("\n\n");
 num=0;
 i=0;
 }
